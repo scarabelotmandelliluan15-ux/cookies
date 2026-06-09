@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exemplo Didático: Cookies e Personalização</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Exemplo de Cookies</h1>
+      <div class="controls">
+        <button id="themeToggle" class="btn theme-toggle" aria-pressed="false" title="Alternar claro/escuro">
+          <span class="theme-icon" aria-hidden="true">☀️</span>
+          <span class="theme-label">Claro</span>
+        </button>
+        <button id="openPrefs" class="btn">Preferências</button>
+        <button id="clearCookies" class="btn">Limpar</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="intro">
+        <p>Este exemplo mostra como pedir consentimento, salvar preferências com cookies e permitir personalização da interface (modo claro/escuro, cor de destaque e tamanho de fonte).</p>
+      </section>
+
+      <section class="status">
+        <p>Usuário: <strong id="username">Visitante</strong></p>
+        <p>Preferências salvas: <span id="prefs-summary">nenhuma</span></p>
+      </section>
+
+      <section class="debug hidden" id="debug">
+        <h2>Cookies atuais</h2>
+        <pre id="cookie-output">(nenhum)</pre>
+      </section>
+    </main>
+
+    <!-- Banner de consentimento -->
+    <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-live="polite" aria-describedby="cookie-banner-desc">
+      <div class="banner-content">
+        <p id="cookie-banner-desc">Usamos cookies para personalizar sua experiência. Aceita cookies de personalização?</p>
+        <div class="banner-actions">
+          <button id="acceptCookies" class="btn primary">Aceitar</button>
+          <button id="declineCookies" class="btn">Recusar</button>
+          <button id="manageCookies" class="btn">Gerenciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Preferências -->
+    <div id="prefs-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="prefs-title">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h3 id="prefs-title">Preferências</h3>
+          <button id="closePrefs" class="close" aria-label="Fechar">✕</button>
+        </header>
+        <form id="prefs-form">
+          <label>Nome: <input type="text" id="pref-name" placeholder="Como quer ser chamado?" autocomplete="name"></label>
+          <label>Tema:
+            <select id="pref-theme">
+              <option value="light">Claro</option>
+              <option value="dark">Escuro</option>
+            </select>
+          </label>
+          <label>Cor de destaque: <input type="color" id="pref-accent" value="#2563eb"></label>
+          <label>Tamanho da fonte: <input type="range" id="pref-fontsize" min="14" max="22" value="16"></label>
+          <div class="modal-actions">
+            <button id="savePrefs" class="btn primary" type="button">Salvar</button>
+            <button id="saveAndAccept" class="btn" type="button">Salvar e aceitar</button>
+            <button id="exportPrefs" class="btn" type="button">Exportar preferências</button>
+            <button id="removePrefs" class="btn" type="button">Remover preferências</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
