@@ -1,38 +1,68 @@
+<!-- Declara que este é um documento HTML5 -->
 <!doctype html>
+<!-- Abre a tag html e define o idioma como português brasileiro -->
 <html lang="pt-BR">
   <head>
+    <!-- Define o conjunto de caracteres como UTF-8 para suportar caracteres acentuados -->
     <meta charset="utf-8">
+    <!-- Configura a viewport para tornar a página responsiva em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Define o título que aparece na aba do navegador -->
     <title>Exemplo Didático: Cookies e Personalização</title>
+    <!-- Importa o arquivo CSS externo que contém os estilos da página -->
     <link rel="stylesheet" href="style.css">
   </head>
+  <!-- Corpo principal da página -->
   <body>
+    <!-- Cabeçalho da página com título e controles -->
     <header class="site-header">
+      <!-- Título principal da página -->
       <h1>Exemplo de Cookies</h1>
+      <!-- Contenedor dos botões de controle -->
       <div class="controls">
+        <!-- Botão para alternar entre tema claro e escuro -->
         <button id="themeToggle" class="btn theme-toggle" aria-pressed="false" title="Alternar claro/escuro">
+          <!-- Ícone do sol (☀️) que muda para lua quando em modo escuro -->
           <span class="theme-icon" aria-hidden="true">☀️</span>
+          <!-- Texto do botão indicando o tema atual -->
           <span class="theme-label">Claro</span>
         </button>
+        <!-- Botão para abrir a modal de preferências do usuário -->
         <button id="openPrefs" class="btn">Preferências</button>
+        <!-- Botão para limpar todos os cookies salvos -->
         <button id="clearCookies" class="btn">Limpar</button>
       </div>
     </header>
 
+    <!-- Conteúdo principal da página -->
     <main class="container">
+      <!-- Seção introdutória com explicação -->
       <section class="intro">
+        <!-- Parágrafo explicando o funcionamento do exemplo -->
         <p>Este exemplo mostra como pedir consentimento, salvar preferências com cookies e permitir personalização da interface (modo claro/escuro, cor de destaque e tamanho de fonte).</p>
       </section>
 
+      <!-- Seção que mostra status do usuário e preferências -->
       <section class="status">
+        <!-- Exibe o nome do usuário (padrão é "Visitante") -->
         <p>Usuário: <strong id="username">Visitante</strong></p>
+        <!-- Mostra se as preferências foram salvas ou são temporárias -->
         <p>Preferências salvas: <span id="prefs-summary">nenhuma</span></p>
       </section>
 
-      <section class="debug hidden" id="debug">
-        <h2>Cookies atuais</h2>
-        <pre id="cookie-output">(nenhum)</pre>
-      </section>
+      <!-- Seçãofixo na parte inferior pedindo consentimento de cookies -->
+    <div id="cookie-banner" class="cookie-banner hidden" role="dialog" aria-live="polite" aria-describedby="cookie-banner-desc">
+      <!-- Contenedor do conteúdo do banner -->
+      <div class="banner-content">
+        <!-- Mensagem informando sobre cookies e pedindo consentimento -->
+        <p id="cookie-banner-desc">Usamos cookies para personalizar sua experiência. Aceita cookies de personalização?</p>
+        <!-- Grupo de botões de ação -->
+        <div class="banner-actions">
+          <!-- Botão para aceitar todos os cookies -->
+          <button id="acceptCookies" class="btn primary">Aceitar</button>
+          <!-- Botão para recusar os cookies de personalização -->
+          <button id="declineCookies" class="btn">Recusar</button>
+          <!-- Botão para gerenciar e configurar preferências de cookies --
     </main>
 
     <!-- Banner de consentimento -->
@@ -41,33 +71,50 @@
         <p id="cookie-banner-desc">Usamos cookies para personalizar sua experiência. Aceita cookies de personalização?</p>
         <div class="banner-actions">
           <button id="acceptCookies" class="btn primary">Aceitar</button>
-          <button id="declineCookies" class="btn">Recusar</button>
-          <button id="manageCookies" class="btn">Gerenciar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal de Preferências -->
+          <button preferências do usuário (inicialmente oculta) -->
     <div id="prefs-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="prefs-title">
+      <!-- Contenedor do conteúdo da modal -->
       <div class="modal-content">
+        <!-- Cabeçalho da modal com título e botão fechar -->
         <header class="modal-header">
+          <!-- Título identificador da modal -->
           <h3 id="prefs-title">Preferências</h3>
+          <!-- Botão para fechar a modal (✕) -->
           <button id="closePrefs" class="close" aria-label="Fechar">✕</button>
         </header>
+        <!-- Formulário com campos de preferência -->
         <form id="prefs-form">
+          <!-- Campo de entrada de texto para o nome do usuário -->
           <label>Nome: <input type="text" id="pref-name" placeholder="Como quer ser chamado?" autocomplete="name"></label>
+          <!-- Seletor de tema (claro ou escuro) -->
           <label>Tema:
             <select id="pref-theme">
+              <!-- Opção de tema claro -->
               <option value="light">Claro</option>
+              <!-- Opção de tema escuro -->
               <option value="dark">Escuro</option>
             </select>
           </label>
+          <!-- Campo de seleção de cor com picker de cores (padrão azul #2563eb) -->
           <label>Cor de destaque: <input type="color" id="pref-accent" value="#2563eb"></label>
+          <!-- Campo de controle deslizante para ajustar tamanho de fonte (14px a 22px, padrão 16px) -->
           <label>Tamanho da fonte: <input type="range" id="pref-fontsize" min="14" max="22" value="16"></label>
+          <!-- Grupo de botões de ação da modal -->
           <div class="modal-actions">
+            <!-- Botão para salvar as preferências sem aceitar cookies -->
             <button id="savePrefs" class="btn primary" type="button">Salvar</button>
+            <!-- Botão para salvar preferências e aceitar cookies -->
             <button id="saveAndAccept" class="btn" type="button">Salvar e aceitar</button>
+            <!-- Botão para exportar as preferências em formato JSON -->
             <button id="exportPrefs" class="btn" type="button">Exportar preferências</button>
+            <!-- Botão para remover todas as preferências salvas -->
+            <button id="removePrefs" class="btn" type="button">Remover preferências</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Importa o arquivo JavaScript que contém toda a lógica da página, atributo defer garante que execute após o HTML carregar -->            <button id="exportPrefs" class="btn" type="button">Exportar preferências</button>
             <button id="removePrefs" class="btn" type="button">Remover preferências</button>
           </div>
         </form>
